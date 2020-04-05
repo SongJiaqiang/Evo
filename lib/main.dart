@@ -1,3 +1,4 @@
+import 'package:evo/tab_recommend_page.dart';
 import 'package:evo/top_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -81,17 +82,13 @@ class _MyHomePageState extends State<MyHomePage>
             Container(
               color: Colors.redAccent,
               child: Center(
-                child:
-                    Text(_topBarTitles[0], style: TextStyle(color: Colors.white)),
+                child: Text(
+                  _topBarTitles[0],
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
             ),
-            Container(
-              color: Colors.greenAccent,
-              child: Center(
-                child:
-                    Text(_topBarTitles[1], style: TextStyle(color: Colors.white)),
-              ),
-            ),
+            TabRecommendPage(),
           ],
         ),
       ),
@@ -100,7 +97,7 @@ class _MyHomePageState extends State<MyHomePage>
 
   void _handleTabController() {
     final int index = _tabController.index;
-    
+
     setState(() {
       _currentIndex = index;
       _topBarTitle = _topBarTitles[index];
