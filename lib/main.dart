@@ -40,7 +40,7 @@ class _MyHomePageState extends State<MyHomePage>
 
     _currentIndex = 1;
     _topBarTitle = _topBarTitles[_currentIndex];
-
+		// 初始化TabBarView长度并设置初始位置
     _tabController = TabController(length: 2, vsync: this, initialIndex: _currentIndex);
     _tabController.addListener(_handleTabController);
   }

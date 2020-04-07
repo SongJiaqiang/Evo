@@ -26,11 +26,18 @@ dependencies:
   intl: ^0.16.1
   # 网络库
   dio: ^3.0.9
+  # JSON序列化/反序列化
+  built_value: ^7.0.9
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
+  # JSON序列化/反序列化 辅助工具
+  build_runner: ^1.8.1
+  built_value_generator: ^7.0.9
+
+  
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 

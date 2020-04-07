@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:evo/recommend_page/model/recommend_model.dart';
+import 'package:flutter/material.dart';
 
 class TabRecommendPageCell extends StatelessWidget {
   final RecommendModel cellModel;

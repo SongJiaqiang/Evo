@@ -1,8 +1,10 @@
+import 'package:evo/net/lava_api.dart';
+import 'package:evo/recommend_page/model/lava_program.dart';
 import 'package:flutter/material.dart';
 import 'package:evo/recommend_page/model/recommend_model.dart';
 import 'package:evo/recommend_page/ui/tab_recommend_page_cell.dart';
 import 'package:evo/recommend_page/ui/tab_recommend_page_header.dart';
-import 'package:dio/dio.dart';
+import 'package:built_collection/built_collection.dart';
 
 class TabRecommendPage extends StatefulWidget {
   @override
@@ -33,36 +35,24 @@ class _TabRecommendPageState extends State<TabRecommendPage> {
   }
 
   void loadData() async {
-    Dio dio = Dio();
-    Response<Map> response = await dio.get(
-        'http://www.lavaradio.com/api/radio.listGroundPrograms.json?_pn=3&_sz=20');
-    print(response.data.toString());
-    if (response.data['err'] == 'hapn.ok') {
-      print('Request success');
-      Map resultData = response.data['data'];
-      if (resultData != null) {
-        print(
-            'Request result data size:${resultData['size']}, total:${resultData['total']}');
-        List dataList = resultData['lists'];
-        if (dataList != null && dataList.length > 0) {
-          List<RecommendModel> newModels = [];
-          for (Map item in dataList) {
-            RecommendModel model = RecommendModel();
-            model.id = item['program_id'];
-            model.title = item['program_name'];
-            model.imgUrl = item['pic_url'];
-            model.userName = item['user']['uname'];
-            model.avatarUrl = item['user']['pic_url'];
-
-            newModels.add(model);
-          }
-
-          dataSourceItems.clear();
-          setState(() {
-            dataSourceItems.addAll(newModels);
-          });
-        }
+    BuiltList<LavaProgram> dataList = await Lava.fetchRecommendPrograms();
+    
+    if (dataList != null && dataList.length > 0) {
+      List<RecommendModel> newModels = [];
+      for (LavaProgram p in dataList) {
+        RecommendModel model = RecommendModel((builder) => builder
+          ..id = p.programId
+          ..title = p.programName
+          ..imgUrl = p.picUrl
+          ..userName = p.user.uname
+          ..avatarUrl = p.user.picUrl);
+        newModels.add(model);
       }
+
+      dataSourceItems.clear();
+      setState(() {
+        dataSourceItems.addAll(newModels);
+      });
     }
   }
 }
