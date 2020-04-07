@@ -1,27 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-
-class TabRecommendPage extends StatefulWidget {
-  @override
-  _TabRecommendPageState createState() => _TabRecommendPageState();
-}
-
-class _TabRecommendPageState extends State<TabRecommendPage> {
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-        itemCount: 20,
-        itemBuilder: (_, index) {
-          if (index == 0) {
-            return TabRecommendPageHeader();
-          } else {
-            return TabRecommendPageCell();
-          }
-        });
-  }
-}
+import 'package:evo/recommend_page/model/recommend_model.dart';
 
 class TabRecommendPageCell extends StatelessWidget {
+  final RecommendModel cellModel;
+
+  const TabRecommendPageCell({Key key, @required this.cellModel})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -37,7 +22,7 @@ class TabRecommendPageCell extends StatelessWidget {
                     children: <Widget>[
                       Expanded(
                         child: Text(
-                          '我想和你虚度时光',
+                          cellModel.title,
                           maxLines: 2,
                           style: TextStyle(
                             color: Colors.black,
@@ -62,8 +47,7 @@ class TabRecommendPageCell extends StatelessWidget {
                             color: Colors.greenAccent,
                             borderRadius: BorderRadius.all(Radius.circular(16)),
                           ),
-                          child: Image.network(
-                              'https://img9.doubanio.com/icon/ul129958703-1.jpg'),
+                          child: Image.network(cellModel.avatarUrl),
                         ),
                       ),
                       SizedBox(width: 8),
@@ -73,7 +57,7 @@ class TabRecommendPageCell extends StatelessWidget {
                           children: <TextSpan>[
                             TextSpan(text: '来自'),
                             TextSpan(
-                              text: ' Evo官方 ',
+                              text: ' ${cellModel.userName} ',
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                             TextSpan(text: '的推荐'),
@@ -96,7 +80,7 @@ class TabRecommendPageCell extends StatelessWidget {
                       children: <Widget>[
                         Container(
                           child: Image.network(
-                            'https://p2.music.126.net/PJz3X_y5Il564dV27jHQeg==/2535473815844119.jpg',
+                            cellModel.imgUrl,
                             height: 200,
                             width: double.infinity,
                             fit: BoxFit.cover,
@@ -180,73 +164,5 @@ class TabRecommendPageCell extends StatelessWidget {
         ],
       ),
     );
-  }
-}
-
-class TabRecommendPageHeader extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(16),
-      child: ClipRRect(
-        clipBehavior: Clip.antiAlias,
-        borderRadius: BorderRadius.all(Radius.circular(8)),
-        child: Container(
-          // height: 130,
-          color: Colors.white,
-          child: Stack(
-            children: <Widget>[
-              Positioned(
-                left: 0,
-                right: 0,
-                top: 0,
-                bottom: 0,
-                child: Image.network(
-                  'https://hbimg.huabanimg.com/dd618f5006aaff178eaa2a1aae563fd29736a633dcd76-yBwuSb_fw658',
-                  fit: BoxFit.cover,
-                ),
-              ),
-              Positioned(
-                child: Container(
-                  height: 130,
-                  padding: EdgeInsets.symmetric(horizontal: 32),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        '每日私享歌单',
-                        style: TextStyle(color: Colors.black, fontSize: 14),
-                      ),
-                      Text(
-                        dayOfWeekString(),
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 40,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        dateString(),
-                        style: TextStyle(color: Colors.black, fontSize: 14),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  String dateString() {
-    final DateTime now = DateTime.now();
-    return DateFormat('yyyy.MM.dd').format(now);
-  }
-
-  String dayOfWeekString() {
-    final DateTime now = DateTime.now();
-    return DateFormat.E().format(now);
   }
 }

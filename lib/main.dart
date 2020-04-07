@@ -1,4 +1,4 @@
-import 'package:evo/tab_recommend_page.dart';
+import 'package:evo/recommend_page/ui/tab_recommend_page.dart';
 import 'package:evo/top_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -32,16 +32,16 @@ class _MyHomePageState extends State<MyHomePage>
   int _currentIndex;
   String _topBarTitle;
 
-  final List<String> _topBarTitles = ['First Page', 'Second Page'];
+  final List<String> _topBarTitles = ['私人兆赫', '今天'];
 
   @override
   void initState() {
     super.initState();
 
-    _currentIndex = 0;
-    _topBarTitle = _topBarTitles.first;
+    _currentIndex = 1;
+    _topBarTitle = _topBarTitles[_currentIndex];
 
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 2, vsync: this, initialIndex: _currentIndex);
     _tabController.addListener(_handleTabController);
   }
 
@@ -55,6 +55,7 @@ class _MyHomePageState extends State<MyHomePage>
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 2,
+      initialIndex: 1,
       child: Scaffold(
         appBar: TopBar(
           title: _topBarTitle,
